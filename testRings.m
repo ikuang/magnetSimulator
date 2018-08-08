@@ -4,9 +4,9 @@ close all;
 zRing2Center = 1.27; 
 
 % Get the points describing the rings of rods
-isSq = true; % Set to true for square cross-section rods, false for round
+isSq = false; % Set to true for square cross-section rods, false for round
 nEval = 50; % Number of points per dimension for eval planes
-nRods = 22;  % Number of rods
+nRods = 16;  % Number of rods
 rRod = 0.125; % radius of 1/4 inch rods
 rIn = 1.0;  % One inch ring radius
 rOut = 2.0;  % One inch long rods
