@@ -35,16 +35,18 @@ assert(rRod*nRods <= polyFudge*pi*rIn);
 %Create rod ring with at +z
 rods = rodZRing(z,rIn,rOut,rRod,nRods);
 [qpts,w] = rod2pts(rods.rpfs,rods.rdpbs,rods.rdpss,rods.rdpts,quadpts,wq);
+rods = rodZRing(z+2*rRod,rIn,rOut,rRod,nRods,true);
+[qpts1,w1] = rod2pts(rods.rpfs,rods.rdpbs,rods.rdpss,rods.rdpts,quadpts,wq);
 
 %Create rod ring with at -z
 rods = rodZRing(-z,rIn,rOut,rRod,nRods);
 [qpts2,w2] = rod2pts(rods.rpfs,rods.rdpbs,rods.rdpss,rods.rdpts,quadpts,wq);
+rods = rodZRing(-z-2*rRod,rIn,rOut,rRod,nRods,true);
+[qpts3,w3] = rod2pts(rods.rpfs,rods.rdpbs,rods.rdpss,rods.rdpts,quadpts,wq);
 
 % Merge quad pts and weights, note neg w for -z ring, magnets flipped.
-quadPtsTotal = [qpts,qpts2];
-wTotal = [w;-w2];
-% quadPtsTotal = qpts;
-% wTotal = w; 
+quadPtsTotal = [qpts,qpts1,qpts2,qpts3];
+wTotal = [w;w1;-w2;-w3];
 
 % Create evaluation points for an x-y plane at z=0, and y-z plane at x = 0.
 oneEval = ones(1,nEval);
