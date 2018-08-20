@@ -1,6 +1,6 @@
-startVal = 1.20;
+startVal = 1.25;
 step = 0.01;
-endVal = 1.25; 
+endVal = 1.35; 
 z = [startVal:step:endVal];
 maxE = zeros(size(z));
 for i = 1:numel(z)
@@ -8,40 +8,24 @@ for i = 1:numel(z)
     nPts = size(eFields,2)/2;
     nSide = round(sqrt(nPts));
 
-    maxE(i) = min(eFields(3,:));
+%     maxE(i) = min(eFields(3,:));
     
-    figure(1);
+    hFig = figure(1);
+    set(hFig, 'Position', [0 500 1200 400])
+    subplot(132)
     zpInd = 1:nPts;
     mesh(reshape(eFields(3,zpInd),nSide,nSide));
     axis square;
-    plotTitle = ['Ez in x-y plane through origin, zRing2Center = ' num2str(z(i))];
-    title(plotTitle,'fontsize',15);
+    title('Ez in x-y plane through origin','fontsize',15);
+    subplot(133)
+    imagesc(reshape(eFields(3,zpInd),nSide,nSide));
+    axis square;
+    title('Ez in x-y plane through origin','fontsize',15);
     pause(0.5)
 end
 
-% Plot max eField and corresponding z's
-% figure(2);
-% plot(z,maxE)
-
-%Plot Ex,Ey and Ez for the two planes.
-% figure(1);
-% zpInd = 1:nPts;
-% xpInd = nPts+1:2*nPts;
-% subplot(221)
-% mesh(reshape(eFields(3,xpInd),nSide,nSide));
-% axis square;
-% title('Ex in y-z plane through origin (normal to x)');
-% subplot(223)
-% imagesc(reshape(eFields(3,xpInd),nSide,nSide));
-% axis square;
-% subplot(222)
-% mesh(reshape(eFields(3,zpInd),nSide,nSide));
-% axis square;
-% title('Ez in x-y plane through origin (normal to z)');
-% subplot(224)
-% imagesc(reshape(eFields(3,zpInd),nSide,nSide));
-% axis square;
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [eFields,zRing2Center] = eField(zRing2Center)
     % Get the points describing the rings of rods
     isSq = false; % Set to true for square cross-section rods, false for round
@@ -50,9 +34,14 @@ function [eFields,zRing2Center] = eField(zRing2Center)
     rRod = 0.125; % radius of 1/4 inch rods
     rIn = 1.0;  % One inch ring radius
     rOut = 2.0;  % One inch long rods
-    [srcPts,srcW,znPlanePts,xnPlanePts] = fourRodRings(zRing2Center, nEval,nRods,rRod,rIn,rOut,isSq);
+    [srcPts,srcW,znPlanePts,xnPlanePts] = twoRodRings(zRing2Center, nEval,nRods,rRod,rIn,rOut,isSq);
 
-%     plotQ(srcPts,10,"quad pts on two rings of rods");
+    subplot(131)
+    plot3(srcPts(1,:),srcPts(2,:),srcPts(3,:),'*-');
+    xlabel('x'); ylabel('y'); zlabel('z');
+    plotTitle = ['zRing2Center = ' num2str(zRing2Center)];
+    title(plotTitle,'fontsize',15);
+    grid on; axis square;
 
     % Make sure the eval points in the x-y (zNormal) and y-z (xNormal) planes are equal-size squares
     assert(size(xnPlanePts,2) == size(znPlanePts,2));

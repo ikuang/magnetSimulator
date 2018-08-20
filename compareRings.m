@@ -1,7 +1,7 @@
 close all;
 %% two rings
 % Distance from magnet rings to center plane, optimize this for uniformity.
-zRing2Center = 1.25; 
+zRing2Center = 1.24; 
 
 % Get the points describing the rings of rods
 isSq = false; % Set to true for square cross-section rods, false for round
@@ -25,25 +25,31 @@ evalPts = [znPlanePts,xnPlanePts];
 efields = evalEfields(srcPts, srcW, evalPts);
 
 % Convert efield to units of Gauss
-efields = efields .* (-6559/0.0668);
+% efields = efields .* (174.5/-0.038362618395502);
+efields = efields .* (81.5/-0.030399030235143);
 
 %Plot Ex,Ey and Ez for the two planes.
 zpInd = 1:nPts;
 xpInd = nPts+1:2*nPts;
 figure(2);
 subplot(221)
-mesh(reshape(efields(3,xpInd),nSide,nSide));
+mesh(reshape(xnPlanePts(2,:),nSide,nSide),reshape(xnPlanePts(3,:),nSide,nSide),reshape(efields(3,xpInd),nSide,nSide));
+xlabel('y'); ylabel('z');
 axis square;
 title('Ex in y-z plane through origin (normal to x)');
 subplot(223)
-imagesc(reshape(efields(3,xpInd),nSide,nSide));
+imagesc(xnPlanePts(2,:),xnPlanePts(3,:),reshape(efields(3,xpInd),nSide,nSide));
+xlabel('y'); ylabel('z');
 axis square;
 subplot(222)
-mesh(reshape(efields(3,zpInd),nSide,nSide));
+mesh(reshape(znPlanePts(1,zpInd),nSide,nSide),reshape(znPlanePts(2,zpInd),nSide,nSide),reshape(efields(3,zpInd),nSide,nSide));
+xlabel('x'); ylabel('y');
 axis square;
 title('Ez in x-y plane through origin (normal to z)');
 subplot(224)
+% imagesc(znPlanePts(1,zpInd),znPlanePts(2,zpInd),reshape(efields(3,zpInd),nSide,nSide));
 imagesc(reshape(efields(3,zpInd),nSide,nSide));
+xlabel('x'); ylabel('y');
 axis square;
 suptitle('TWO rings');
 
@@ -65,25 +71,30 @@ evalPts = [znPlanePts,xnPlanePts];
 efields = evalEfields(srcPts, srcW, evalPts);
 
 % Convert efield to units of Gauss
-efields = efields .* (-6559/0.0668);
+% efields = efields .* (174.5/-0.038362618395502);
+efields = efields .* (81.5/-0.030399030235143);
 
 %Plot Ex,Ey and Ez for the two planes.
 zpInd = 1:nPts;
 xpInd = nPts+1:2*nPts;
 figure(4);
 subplot(221)
-mesh(reshape(efields(3,xpInd),nSide,nSide));
+mesh(reshape(xnPlanePts(2,:),nSide,nSide),reshape(xnPlanePts(3,:),nSide,nSide),reshape(efields(3,xpInd),nSide,nSide));
+xlabel('y'); ylabel('z');
 axis square;
 title('Ex in y-z plane through origin (normal to x)');
 subplot(223)
-imagesc(reshape(efields(3,xpInd),nSide,nSide));
+imagesc(xnPlanePts(2,:),xnPlanePts(3,:),reshape(efields(3,xpInd),nSide,nSide));
+xlabel('y'); ylabel('z');
 axis square;
 subplot(222)
-mesh(reshape(efields(3,zpInd),nSide,nSide));
+mesh(reshape(znPlanePts(1,zpInd),nSide,nSide),reshape(znPlanePts(2,zpInd),nSide,nSide),reshape(efields(3,zpInd),nSide,nSide));
+xlabel('x'); ylabel('y');
 axis square;
 title('Ez in x-y plane through origin (normal to z)');
 subplot(224)
-imagesc(reshape(efields(3,zpInd),nSide,nSide));
+imagesc(znPlanePts(1,zpInd),znPlanePts(2,zpInd),reshape(efields(3,zpInd),nSide,nSide));
+xlabel('x'); ylabel('y');
 axis square;
 suptitle('FOUR rings');
 
