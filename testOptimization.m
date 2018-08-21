@@ -14,7 +14,7 @@ isSq = true; % Set to true for square cross-section rods, false for round
 nEval = 50; % Number of points per dimension for eval planes
 nRods = 16;  % Number of rods
 rRod = 0.125; % radius of 1/4 inch rods
-rIn = 1;  % One inch ring radius
+rIn = 0.885;  % One inch ring radius
 rOut = rIn + 2.0;  % One inch long rods
 [srcPts,srcW,znPlanePts,xnPlanePts] = fourRodRings(zRing2Center, nEval,nRods,rRod,rIn,rOut,isSq);
 
@@ -43,7 +43,7 @@ efields = applyCirclularMask(efields,nEval,zpInd);
 
 
 % Find 25x25 pixel area in center of Ez field
-centerInd = 1:floor(nSide);
+centerInd = round(nSide/4):floor(nSide*3/4);
 eCenter = efields(centerInd,centerInd);
 subplot(132)
 imagesc(znPlanePts(1,zpInd),znPlanePts(2,zpInd),efields);
@@ -55,6 +55,6 @@ imagesc(znPlanePts(1,centerInd),znPlanePts(1,centerInd),eCenter);
 colorbar;
 axis square;
 title('Center 0.5x0.5 inch FOV','fontsize',15);
-eCenter = reshape(eCenter,nSide*nSide,1);
+eCenter = reshape(eCenter,nSide/2*nSide/2,1);
 eFieldVar = var(eCenter);
 end 
