@@ -34,8 +34,9 @@ for i = 1:nRods
     w(ptsIndex:ptsIndex+nQuadPts-1) = area*wquad;
     ptsIndex = ptsIndex + nQuadPts;
     qpts(:,ptsIndex:ptsIndex+nQuadPts-1) = mapPts(pf+dpb,dps,dpt,quadpts);
-    w(ptsIndex:ptsIndex+nQuadPts-1) = area*wquad;
+    w(ptsIndex:ptsIndex+nQuadPts-1) = -area*wquad;
     ptsIndex = ptsIndex + nQuadPts;
 end
+w = w.* (15.9/-0.031)/10; % weight for mT
 end
 

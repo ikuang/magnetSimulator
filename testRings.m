@@ -1,15 +1,15 @@
 clear all; close all; clc;
 
 % Distance from magnet rings to center plane, optimize this for uniformity.
-zRing2Center = 1.27; 
+zRing2Center = 1; 
 
 % Get the points describing the rings of rods
 isSq = false; % Set to true for square cross-section rods, false for round
-nEval = 50; % Number of points per dimension for eval planes
+nEval = 49; % Number of points per dimension for eval planes
 nRods = 1;  % Number of rods
 rRod = 0.125; % radius of 1/4 inch rods
-rIn = 1.0;  % One inch ring radius
-rOut = 2.0;  % One inch long rods
+rIn = 0.885;  % One inch ring radius
+rOut = rIn + 1.0;  % One inch long rods
 [srcPts,srcW,znPlanePts,xnPlanePts] = oneRodRing(zRing2Center, nEval,nRods,rRod,rIn,rOut,isSq);
 
 plotQ(srcPts,10,"quad pts on two rings of rods");
@@ -54,6 +54,36 @@ axis square;
 % figure(5);
 % mesh(reshape(efields(2,zpInd),nSide,nSide));
 figure(6);
+subplot(211)
+mesh(reshape(znPlanePts(1,zpInd),nSide,nSide),reshape(znPlanePts(2,zpInd),nSide,nSide),reshape(efields(3,zpInd),nSide,nSide));
+xlabel('x'); ylabel('y');
+axis square;
+title('Ez in x-y plane through origin (normal to z)');
+subplot(212)
+imagesc(znPlanePts(1,zpInd),znPlanePts(2,zpInd),reshape(efields(3,zpInd),nSide,nSide));
+xlabel('x'); ylabel('y');
+axis square;
+
+
+%% after scaling e-field 
+efields = efields .* (38.2/-0.022016312720158);
+
+figure(4);
+subplot(211)
+mesh(reshape(xnPlanePts(2,:),nSide,nSide),reshape(xnPlanePts(3,:),nSide,nSide),reshape(efields(3,xpInd),nSide,nSide));
+xlabel('y'); ylabel('z');
+axis square;
+title('Ex in y-z plane through origin (normal to x)');
+subplot(212)
+imagesc(xnPlanePts(2,:),xnPlanePts(3,:),reshape(efields(3,xpInd),nSide,nSide));
+xlabel('y'); ylabel('z');
+axis square;
+% figure(4);
+% mesh(reshape(efields(1,zpInd),nSide,nSide));
+% axis tight;
+% figure(5);
+% mesh(reshape(efields(2,zpInd),nSide,nSide));
+figure(7);
 subplot(211)
 mesh(reshape(znPlanePts(1,zpInd),nSide,nSide),reshape(znPlanePts(2,zpInd),nSide,nSide),reshape(efields(3,zpInd),nSide,nSide));
 xlabel('x'); ylabel('y');

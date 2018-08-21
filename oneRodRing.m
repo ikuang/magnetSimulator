@@ -1,4 +1,4 @@
-function [quadPtsTotal,wTotal,znPlanePts,xnPlanePts] = twoRodRings(z,nEval,nRods,rRod,rIn,rOut,isSq,plotFrac)
+function [quadPtsTotal,wTotal,znPlanePts,xnPlanePts] = oneRodRings(z,nEval,nRods,rRod,rIn,rOut,isSq,plotFrac)
 % Create two rings, one at +z, one at -z
 % Creates rod data structure with nRods forming the spokes of a wheel
 % in the x-y plane about x=0,y=0,z=zIn with inside radius rIn and outside
