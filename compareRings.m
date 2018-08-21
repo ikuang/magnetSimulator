@@ -1,17 +1,18 @@
 close all;
 % Distance from magnet rings to center plane, optimize this for uniformity.
-zRing2Center = 1.25; 
+zRing2Center = 0.904; 
 
-isSq = false; % Set to true for square cross-section rods, false for round
+isSq = true; % Set to true for square cross-section rods, false for round
 nEval = 50; % Number of points per dimension for eval planes
 nRods = 16;  % Number of rods
 rRod = 0.125; % radius of 1/4 inch rods
-rIn = 1.0;  % One inch ring radius
-rOut = 2.0;  % One inch long rods
+rIn = 0.84;  % One inch ring radius
+rOut = rIn + 2.0;  % One inch long rods
 
-%% two rings
+%% 1
 % Get the points describing the rings of rods
-[srcPts,srcW,znPlanePts,xnPlanePts] = twoRodRings(zRing2Center, nEval,nRods,rRod,rIn,rOut,isSq);
+nRings = 6;
+[srcPts,srcW,znPlanePts,xnPlanePts] = nRodRings(nRings,zRing2Center, nEval,nRods,rRod,rIn,rOut,isSq);
 
 plotQ(srcPts,1,"quad pts on TWO rings of rods");
 
@@ -27,7 +28,7 @@ efields = evalEfields(srcPts, srcW, evalPts);
 
 % Convert efield to units of Gauss
 % efields = efields .* (81.5/-0.030399030235143);
-efields = efields .* (16.1/-0.022016312720158);
+% efields = efields .* (16.1/-0.022016312720158);
 
 %Plot Ex,Ey and Ez for the two planes.
 zpInd = 1:nPts;
@@ -56,9 +57,10 @@ xlabel('x'); ylabel('y');
 axis square;
 suptitle('TWO rings');
 
-%% four rings
+%% 2
 % Get the points describing the rings of rods (same parameters as for 2 rings)
-[srcPts,srcW,znPlanePts,xnPlanePts] = fourRodRings(zRing2Center, nEval,nRods,rRod,rIn,rOut,isSq);
+nRings = 4;
+[srcPts,srcW,znPlanePts,xnPlanePts] = nRodRings(nRings,zRing2Center, nEval,nRods,rRod,rIn,rOut,isSq);
 
 plotQ(srcPts,3,"quad pts on FOUR rings of rods");
 
@@ -74,7 +76,7 @@ efields = evalEfields(srcPts, srcW, evalPts);
 
 % Convert efield to units of Gauss
 % efields = efields .* (81.5/-0.030399030235143);
-efields = efields .* (38.2/-0.022016312720158);
+% efields = efields .* (38.2/-0.022016312720158);
 
 %Plot Ex,Ey and Ez for the two planes.
 zpInd = 1:nPts;
