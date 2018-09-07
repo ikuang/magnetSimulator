@@ -2,11 +2,12 @@ clear all; close all; clc;
 
 options = optimoptions('fsolve','PlotFcn',@optimplotfirstorderopt,'Algorithm','levenberg-marquardt','Display','iter-detailed','OptimalityTolerance',1e-6);
 fun = @eField;
-z0 = 1;  
+z0 = .75;  
+rIn = 0.84;
 zRing2Center = fsolve(fun,z0,options)
 % print('-f10','../magSimFigs/twoRingRound_quarterInch','-dpng')
 
-% eField(1)
+% eField(.8)
 
 function eFieldVar = eField(zRing2Center)
 % Get the points describing the rings of rods
@@ -43,7 +44,12 @@ efields = applyCirclularMask(efields,nEval,zpInd);
 
 
 % Find 25x25 pixel area in center of Ez field
-centerInd = round(nSide/4):floor(nSide*3/4);
+percentFOV = 1/3;
+sideScaling = sqrt(percentFOV);
+sideLow = (1-sideScaling)/2;
+sideHigh = 1-sideLow;
+% centerInd = round(nSide/4):floor(nSide*3/4);
+centerInd = round(nSide*sideLow):round(nSide*sideHigh);
 eCenter = efields(centerInd,centerInd);
 subplot(132)
 imagesc(znPlanePts(1,zpInd),znPlanePts(2,zpInd),efields);
@@ -55,6 +61,6 @@ imagesc(znPlanePts(1,centerInd),znPlanePts(1,centerInd),eCenter);
 colorbar;
 axis square;
 title('Center FOV','fontsize',15);
-eCenter = reshape(eCenter,nSide/2*nSide/2,1);
+eCenter = reshape(eCenter,length(centerInd)^2,1);
 eFieldVar = var(eCenter);
 end 

@@ -2,10 +2,11 @@ close all;
 % Distance from magnet rings to center plane, optimize this for uniformity.
 zRing2Center = 0.904; 
 
-isSq = true; % Set to true for square cross-section rods, false for round
+isSq = false; % Set to true for square cross-section rods, false for round
 nEval = 50; % Number of points per dimension for eval planes
 nRods = 16;  % Number of rods
 rRod = 0.125; % radius of 1/4 inch rods
+% rIn = 0.6725;  % One inch ring radius
 rIn = 0.84;  % One inch ring radius
 rOut = rIn + 2.0;  % One inch long rods
 
@@ -14,7 +15,8 @@ rOut = rIn + 2.0;  % One inch long rods
 nRings = 6;
 [srcPts,srcW,znPlanePts,xnPlanePts] = nRodRings(nRings,zRing2Center, nEval,nRods,rRod,rIn,rOut,isSq);
 
-plotQ(srcPts,1,"quad pts on TWO rings of rods");
+figTitle = ['quad pts on ' int2str(nRings) ' rings of rods'];
+plotQ(srcPts,1,figTitle);
 
 % Make sure the eval points in the x-y (zNormal) and y-z (xNormal) planes are equal-size squares
 assert(size(xnPlanePts,2) == size(znPlanePts,2));
@@ -55,14 +57,16 @@ subplot(224)
 imagesc(znPlanePts(1,zpInd),znPlanePts(2,zpInd),efieldsImage);
 xlabel('x'); ylabel('y');
 axis square;
-suptitle('TWO rings');
+figTitle = [int2str(nRings) ' RINGS OF RODS'];
+suptitle(figTitle);
 
 %% 2
 % Get the points describing the rings of rods (same parameters as for 2 rings)
 nRings = 4;
 [srcPts,srcW,znPlanePts,xnPlanePts] = nRodRings(nRings,zRing2Center, nEval,nRods,rRod,rIn,rOut,isSq);
 
-plotQ(srcPts,3,"quad pts on FOUR rings of rods");
+figTitle = ['quad pts on ' int2str(nRings) ' rings of rods'];
+plotQ(srcPts,1,figTitle);
 
 % Make sure the eval points in the x-y (zNormal) and y-z (xNormal) planes are equal-size squares
 assert(size(xnPlanePts,2) == size(znPlanePts,2));
@@ -102,5 +106,6 @@ subplot(224)
 imagesc(znPlanePts(1,zpInd),znPlanePts(2,zpInd),efieldsImage);
 xlabel('x'); ylabel('y');
 axis square;
-suptitle('FOUR rings');
+figTitle = [int2str(nRings) ' RINGS OF RODS'];
+suptitle(figTitle);
 
