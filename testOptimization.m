@@ -2,7 +2,7 @@ clear all; close all; clc;
 
 options = optimoptions('fsolve','PlotFcn',@optimplotfirstorderopt,'Algorithm','levenberg-marquardt','Display','iter-detailed','OptimalityTolerance',1e-6);
 fun = @eField;
-z0 = .75;  
+z0 = 1;  
 rIn = 0.84;
 zRing2Center = fsolve(fun,z0,options)
 % print('-f10','../magSimFigs/twoRingRound_quarterInch','-dpng')

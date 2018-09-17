@@ -1,6 +1,6 @@
 close all;
 % Distance from magnet rings to center plane, optimize this for uniformity.
-zRing2Center = 0.904; 
+zRing2Center = 0.865; 
 
 isSq = false; % Set to true for square cross-section rods, false for round
 nEval = 50; % Number of points per dimension for eval planes
