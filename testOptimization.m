@@ -7,7 +7,7 @@ rIn = 0.84;
 zRing2Center = fsolve(fun,z0,options)
 % print('-f10','../magSimFigs/twoRingRound_quarterInch','-dpng')
 
-% eField(.8)
+% eField(.882)
 
 function eFieldVar = eField(zRing2Center)
 % Get the points describing the rings of rods

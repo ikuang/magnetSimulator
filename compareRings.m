@@ -1,6 +1,6 @@
 close all;
 % Distance from magnet rings to center plane, optimize this for uniformity.
-zRing2Center = 0.865; 
+zRing2Center = 0.882; 
 
 isSq = false; % Set to true for square cross-section rods, false for round
 nEval = 50; % Number of points per dimension for eval planes
@@ -77,10 +77,6 @@ assert(nSide^2 == nPts);
 % Evaluate the fields
 evalPts = [znPlanePts,xnPlanePts];
 efields = evalEfields(srcPts, srcW, evalPts);
-
-% Convert efield to units of Gauss
-% efields = efields .* (81.5/-0.030399030235143);
-% efields = efields .* (38.2/-0.022016312720158);
 
 %Plot Ex,Ey and Ez for the two planes.
 zpInd = 1:nPts;

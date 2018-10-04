@@ -6,7 +6,11 @@ function efieldsImage = applyCirclularMask(efields,nEval,xyzpInd)
 mask = createCircularMask([nEval,nEval],[(nEval+1)/2 (nEval+1)/2],nEval/2);
 
 % reshape efield vector
-efieldsImage = reshape(efields(3,xyzpInd),nEval,nEval);
+if(size(efields,1) ~= 1) 
+    efieldsImage = reshape(efields(3,xyzpInd),nEval,nEval);
+else
+    efieldsImage = reshape(efields,nEval,nEval);
+end
 
 % mask image
 efieldsImage = efieldsImage .* mask;
